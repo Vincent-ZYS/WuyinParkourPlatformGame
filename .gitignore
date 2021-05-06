@@ -86,7 +86,6 @@ crashlytics-build.properties
 *.npmignore
 *.md
 *.meta
-*.cs
 *.asmdef
 *.uss
 *.yml
