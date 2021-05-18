@@ -15,6 +15,9 @@ public class MainUIPanel : MonoBehaviour
         Initiation();
     }
 
+    /// <summary>
+    /// The initiation function of Main menu UI panel.
+    /// </summary>
     private void Initiation()
     {
         startGame_Btn = transform.Find("DownPart_go/StartBg_btn").GetComponent<Button>();
@@ -27,6 +30,9 @@ public class MainUIPanel : MonoBehaviour
         sound_Btn.onClick.AddListener(OnSoundBtnClick);
     }
 
+    /// <summary>
+    /// The start game button click function.
+    /// </summary>
     private void OnStartGameBtnClick()
     {
         EventCenter.BroadCast(EventType.ShowGamePanel);

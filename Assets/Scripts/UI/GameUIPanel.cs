@@ -16,6 +16,9 @@ public class GameUIPanel : MonoBehaviour
         Initiation();
     }
 
+    /// <summary>
+    /// The Game UI Panel initation function.
+    /// </summary>
     private void Initiation()
     {
         currentScore_Txt = transform.Find("CurrentScore_txt").GetComponent<Text>();
@@ -27,11 +30,17 @@ public class GameUIPanel : MonoBehaviour
         startGame_Img.enabled = false;
     }
 
+    /// <summary>
+    /// The function to activate current UI panel object.
+    /// </summary>
     private void ShowGameUIPanel()
     {
         gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Current panel's pause button click logic function.
+    /// </summary>
     private void OnPauseGameBtnClick()
     {
         if(!startGame_Img.enabled)
