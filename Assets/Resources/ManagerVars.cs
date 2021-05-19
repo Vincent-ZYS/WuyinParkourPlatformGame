@@ -13,6 +13,16 @@ public class ManagerVars : ScriptableObject
     public List<Sprite> bgThemeSpriteList = new List<Sprite>();
 
     /// <summary>
+    /// The player's character prefab gameobject.
+    /// </summary>
+    public GameObject PlayerCharacter;
+
+    /// <summary>
+    /// The player's character initial spawn position.
+    /// </summary>
+    public Vector3 PlayerInitialSpawnPosition;
+
+    /// <summary>
     /// The platform next spawn position.
     /// </summary>
     public float nextPosX = 0.55f, nextPosY = 0.64f;

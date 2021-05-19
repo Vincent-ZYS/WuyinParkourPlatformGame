@@ -35,6 +35,7 @@ public class PlatformSpawner : MonoBehaviour
             spawnPlatformCount = 5;
             DecidePath();
         }
+        SpawnClassicPlayerCharacter();
     }
 
     private void DecidePath()
@@ -70,5 +71,11 @@ public class PlatformSpawner : MonoBehaviour
     {
         GameObject platformGo = Object.Instantiate(varsContainer.normalPlatformGo, transform);
         platformGo.transform.position = spawnPlatformPosition;
+    }
+
+    private void SpawnClassicPlayerCharacter()
+    {
+        GameObject playerPrefabGo = Object.Instantiate(varsContainer.PlayerCharacter);
+        playerPrefabGo.transform.position = varsContainer.PlayerInitialSpawnPosition;
     }
 }
