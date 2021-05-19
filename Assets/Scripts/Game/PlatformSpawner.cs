@@ -13,8 +13,17 @@ public class PlatformSpawner : MonoBehaviour
     /// The count of spawning platform.
     /// </summary>
     private int spawnPlatformCount;
+    /// <summary>
+    /// Next platform spawning position.
+    /// </summary>
     private Vector3 spawnPlatformPosition;
+    /// <summary>
+    /// The flag (siwtch) to judge spawn left or not.
+    /// </summary>
     private bool isLeftSpawan = false;
+    /// <summary>
+    /// The configuration parameter management container.
+    /// </summary>
     private ManagerVars varsContainer;
 
     private void Start()
@@ -43,18 +52,23 @@ public class PlatformSpawner : MonoBehaviour
 
     private void SpawnPlatform()
     {
-        GameObject platformGo = Object.Instantiate(varsContainer.normalPlatformGo, transform);
-        platformGo.transform.position = spawnPlatformPosition;
+        SpawnNormalPlatform();
         if(isLeftSpawan)
         {
             //Spawn platform on left hand side.
-            spawnPlatformPosition = new Vector3(platformGo.transform.position.x - varsContainer.nextPosX, 
-                platformGo.transform.position.y + varsContainer.nextPosY,0f);
+            spawnPlatformPosition = new Vector3(spawnPlatformPosition.x - varsContainer.nextPosX,
+                spawnPlatformPosition.y + varsContainer.nextPosY,0f);
         }else
         {
             //Spawn platform on right hand side.
-            spawnPlatformPosition = new Vector3(platformGo.transform.position.x + varsContainer.nextPosX,
-                platformGo.transform.position.y + varsContainer.nextPosY,0f);
+            spawnPlatformPosition = new Vector3(spawnPlatformPosition.x + varsContainer.nextPosX,
+                spawnPlatformPosition.y + varsContainer.nextPosY,0f);
         }
+    }
+
+    private void SpawnNormalPlatform()
+    {
+        GameObject platformGo = Object.Instantiate(varsContainer.normalPlatformGo, transform);
+        platformGo.transform.position = spawnPlatformPosition;
     }
 }

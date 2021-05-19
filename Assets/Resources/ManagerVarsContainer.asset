@@ -17,3 +17,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5feddf0396f8fd842b6a2034a343e884, type: 3}
   - {fileID: 21300000, guid: 274864b118ac4f54589e32e7035cd77f, type: 3}
   - {fileID: 21300000, guid: 81cb795749aefac4ea7663bc3f7f71fb, type: 3}
+  nextPosX: 0.55
+  nextPosY: 0.64
+  normalPlatformGo: {fileID: 7377933233478332101, guid: f46a766c58b1295478f78f503b9e6724,
+    type: 3}
