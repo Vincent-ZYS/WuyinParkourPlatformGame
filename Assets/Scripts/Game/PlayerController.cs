@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class PlayerController : MonoBehaviour
     /// The flag to judge player move left or not.
     /// </summary>
     private bool isMoveLeft = false;
+    /// <summary>
+    /// The flag to judge player is jumping or not.
+    /// </summary>
+    private bool isJumping = false;
     /// <summary>
     /// The next left Spawned Platform Position.
     /// </summary>
@@ -34,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private void ClickLeftScreenToMove()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !isJumping)
         {
             if(Input.mousePosition.x <= Screen.width/2)
             {
@@ -43,18 +48,28 @@ public class PlayerController : MonoBehaviour
             {
                 isMoveLeft = false;
             }
+            PlayerJump();
         }
     }
 
     private void PlayerJump()
     {
+        isJumping = true;
         if (isMoveLeft)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
+            DoTweenPlayerJumpAnimation(nextLeftPlatformPos);
         } else
         {
             transform.localScale = Vector3.one;
+            DoTweenPlayerJumpAnimation(nextRightPlatformPos);
         }
+    }
+
+    private void DoTweenPlayerJumpAnimation(Vector3 jumpDirection)
+    {
+        transform.DOMoveX(jumpDirection.x, 0.2f);
+        transform.DOMoveY(jumpDirection.y + 0.8f, 0.15f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -66,6 +81,7 @@ public class PlayerController : MonoBehaviour
                 currentPlatformPos.y + varsContainer.nextPosX,0f);
             nextRightPlatformPos = new Vector3(currentPlatformPos.x + varsContainer.nextPosX,
                 currentPlatformPos.y + varsContainer.nextPosX,0f);
+            isJumping = false;
         }
     }
 }
