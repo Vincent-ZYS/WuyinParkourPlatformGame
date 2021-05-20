@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.Instance().isGameStart || GameManager.Instance().isGameOver) { return; }
         ClickLeftScreenToMove();
     }
 
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour
             transform.localScale = Vector3.one;
             DoTweenPlayerJumpAnimation(nextRightPlatformPos);
         }
+        EventCenter.BroadCast(EventType.DecidePath);
     }
 
     private void DoTweenPlayerJumpAnimation(Vector3 jumpDirection)

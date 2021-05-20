@@ -12,6 +12,7 @@ public class MainUIPanel : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.Instance().isGameStart = false;
         Initiation();
     }
 
@@ -36,6 +37,7 @@ public class MainUIPanel : MonoBehaviour
     private void OnStartGameBtnClick()
     {
         EventCenter.BroadCast(EventType.ShowGamePanel);
+        GameManager.Instance().isGameStart = true;
         gameObject.SetActive(false);
     }
 

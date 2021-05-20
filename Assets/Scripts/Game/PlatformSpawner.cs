@@ -26,6 +26,16 @@ public class PlatformSpawner : MonoBehaviour
     /// </summary>
     private ManagerVars varsContainer;
 
+    private void Awake()
+    {
+        EventCenter.AddListner(EventType.DecidePath, DecidePath);
+    }
+
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener(EventType.DecidePath, DecidePath);
+    }
+
     private void Start()
     {
         varsContainer = ManagerVars.GetManagerVarsContainer();
