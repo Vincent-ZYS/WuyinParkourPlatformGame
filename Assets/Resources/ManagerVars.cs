@@ -12,6 +12,8 @@ public class ManagerVars : ScriptableObject
 
     public List<Sprite> bgThemeSpriteList = new List<Sprite>();
 
+    public List<Sprite> platformThemeSpriteList = new List<Sprite>();
+
     /// <summary>
     /// The player's character prefab gameobject.
     /// </summary>

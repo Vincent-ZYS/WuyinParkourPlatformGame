@@ -25,10 +25,15 @@ public class PlatformSpawner : MonoBehaviour
     /// The configuration parameter management container.
     /// </summary>
     private ManagerVars varsContainer;
+    /// <summary>
+    /// Randomly got the platform theme sprite.
+    /// </summary>
+    private Sprite chosenPlatformSprite;
 
     private void Awake()
     {
         EventCenter.AddListner(EventType.DecidePath, DecidePath);
+        varsContainer = ManagerVars.GetManagerVarsContainer();
     }
 
     private void OnDestroy()
@@ -38,14 +43,19 @@ public class PlatformSpawner : MonoBehaviour
 
     private void Start()
     {
-        varsContainer = ManagerVars.GetManagerVarsContainer();
+        RandomlyChoosePlatformTheme();
+        InitiatePlatformGroup();
+        SpawnClassicPlayerCharacter();
+    }
+
+    private void InitiatePlatformGroup()
+    {
         spawnPlatformPosition = startSpawnPos;
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             spawnPlatformCount = 5;
             DecidePath();
         }
-        SpawnClassicPlayerCharacter();
     }
 
     private void DecidePath()
@@ -63,7 +73,7 @@ public class PlatformSpawner : MonoBehaviour
 
     private void SpawnPlatform()
     {
-        SpawnNormalPlatform();
+        InitiateSinglePlatform();
         if(isLeftSpawan)
         {
             //Spawn platform on left hand side.
@@ -77,10 +87,17 @@ public class PlatformSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnNormalPlatform()
+    private void InitiateSinglePlatform()
     {
         GameObject platformGo = Object.Instantiate(varsContainer.normalPlatformGo, transform);
+        platformGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
         platformGo.transform.position = spawnPlatformPosition;
+    }
+
+    private void RandomlyChoosePlatformTheme()
+    {
+        int randomIndex = Random.Range(0, varsContainer.platformThemeSpriteList.Count);
+        chosenPlatformSprite = varsContainer.platformThemeSpriteList[randomIndex];
     }
 
     private void SpawnClassicPlayerCharacter()
