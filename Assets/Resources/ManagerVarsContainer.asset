@@ -17,6 +17,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5feddf0396f8fd842b6a2034a343e884, type: 3}
   - {fileID: 21300000, guid: 274864b118ac4f54589e32e7035cd77f, type: 3}
   - {fileID: 21300000, guid: 81cb795749aefac4ea7663bc3f7f71fb, type: 3}
+  platformThemeSpriteList:
+  - {fileID: 21300000, guid: 20da7e56cbb26b3498b25fb61fa9a7ff, type: 3}
+  - {fileID: 21300012, guid: 20da7e56cbb26b3498b25fb61fa9a7ff, type: 3}
+  - {fileID: 21300004, guid: 20da7e56cbb26b3498b25fb61fa9a7ff, type: 3}
+  - {fileID: 21300002, guid: 20da7e56cbb26b3498b25fb61fa9a7ff, type: 3}
   PlayerCharacter: {fileID: 3475872978358194497, guid: fb9900fafb5f9f54690aa9c8285b8c87,
     type: 3}
   PlayerInitialSpawnPosition: {x: 0, y: -1.9, z: 0}
@@ -24,3 +29,23 @@ MonoBehaviour:
   nextPosY: 0.64
   normalPlatformGo: {fileID: 7377933233478332101, guid: f46a766c58b1295478f78f503b9e6724,
     type: 3}
+  normalPlatformGroupList:
+  - {fileID: 5329402263525587413, guid: 68befa9c4ef81984997b9a9d2c21024e, type: 3}
+  - {fileID: 3365178335764183602, guid: 1e9cd86171292e8479ef0f67a1283f6f, type: 3}
+  - {fileID: 3936819075271544404, guid: eb2d5700957e4754f8da05fda1a236b7, type: 3}
+  - {fileID: 686156582114461480, guid: 7aa69a5dc9968394f9beb6796d11778d, type: 3}
+  forestPlatformGroupList:
+  - {fileID: 3478801632236735655, guid: 206850aa4487fab47bbf20e120c9a981, type: 3}
+  - {fileID: 3611220994164811048, guid: 2aba3a9398c99834da312eaa950918e7, type: 3}
+  - {fileID: 8706250433791636525, guid: 9d926ef6d7c01244a8e242e5d54eb533, type: 3}
+  - {fileID: 938337081791215506, guid: d5506dcad59165141a5858d3e3b90900, type: 3}
+  winterPlatformGroupList:
+  - {fileID: 1847033990806046836, guid: 805f0f285bf832d499a232a72cfc51cc, type: 3}
+  - {fileID: 8672464874880936718, guid: 57833679817b8a94ca473f6bbe9d3230, type: 3}
+  - {fileID: 2241718666529417658, guid: 0eb4ccb1677630c40b1b8a89142d5827, type: 3}
+  - {fileID: 6393286264514364441, guid: dc9d7b04c814cf74fabc2266eab9b028, type: 3}
+  - {fileID: 1232361407513078030, guid: bc800c3f01d4a4f4c935b5b964a75894, type: 3}
+  - {fileID: 7055113060691054854, guid: 3bba5fb35c3e2b24ca8f4589cba765ed, type: 3}
+  spikePlatformGroupList:
+  - {fileID: 1680303093402547081, guid: 76d396e890f16d04db34a897557bfdae, type: 3}
+  - {fileID: 7820514913273594630, guid: 5c3764a77305ce64abe7d870873a5c16, type: 3}

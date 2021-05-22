@@ -10,8 +10,14 @@ public class ManagerVars : ScriptableObject
         return Resources.Load<ManagerVars>("ManagerVarsContainer");
     }
 
+    /// <summary>
+    /// The background image theme sprite to store the theme resource.
+    /// </summary>
     public List<Sprite> bgThemeSpriteList = new List<Sprite>();
 
+    /// <summary>
+    /// The platform theme Sprite List to store the theme resource.
+    /// </summary>
     public List<Sprite> platformThemeSpriteList = new List<Sprite>();
 
     /// <summary>
@@ -33,4 +39,12 @@ public class ManagerVars : ScriptableObject
     /// The normal platform gameobject prefab.
     /// </summary>
     public GameObject normalPlatformGo;
+
+    public List<GameObject> normalPlatformGroupList = new List<GameObject>();
+
+    public List<GameObject> forestPlatformGroupList = new List<GameObject>();
+
+    public List<GameObject> winterPlatformGroupList = new List<GameObject>();
+
+    public List<GameObject> spikePlatformGroupList = new List<GameObject>();
 }
