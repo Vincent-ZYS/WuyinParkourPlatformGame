@@ -117,6 +117,9 @@ public class PlatformSpawner : MonoBehaviour
             {
                 switch(groupType)
                 {
+                    case PlatformGroupType.normal:
+                        InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList);
+                        break;
                     case PlatformGroupType.winter:
                         InitiateCustomizedPlatformGroup(varsContainer.winterPlatformGroupList);
                         break;
@@ -127,7 +130,7 @@ public class PlatformSpawner : MonoBehaviour
                         InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList);
                         break;
                 }
-            }else // spawn stab trap combination
+            }else // spawn spike trap combination
             {
                 spawnSpikesPlatformCount = 4;
                 isSpawningSpikePlatform = true;
