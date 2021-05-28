@@ -24,7 +24,7 @@ public class PlatformSpawner : MonoBehaviour
     /// <summary>
     /// Next platform spawning position.
     /// </summary>
-    private Vector3 spawnPlatformPosition;
+    private Vector3 nextSpawnPlatformPosition;
     /// <summary>
     /// The flag (siwtch) to judge spawn left or not.
     /// </summary>
@@ -49,9 +49,13 @@ public class PlatformSpawner : MonoBehaviour
     /// The position of current spawned platform after spike spawned.
     /// </summary>
     private Vector3 spikeSpawnedPlatformPos;
-
+    /// <summary>
+    /// The flag to judge is the platform currently spawning on spike-group or not.
+    /// </summary>
     private bool isSpawningSpikePlatform = false;
-
+    /// <summary>
+    /// The flag to judge the spike-group is on current platform left-hand side or not.
+    /// </summary>
     private bool isSpikeOnLeftHandSide = false;
 
     private void Awake()
@@ -74,7 +78,7 @@ public class PlatformSpawner : MonoBehaviour
 
     private void InitiateBeginPlatform()
     {
-        spawnPlatformPosition = startSpawnPos;
+        nextSpawnPlatformPosition = startSpawnPos;
         for (int i = 0; i < 5; i++)
         {
             spawnPlatformCount = 5;
@@ -112,29 +116,29 @@ public class PlatformSpawner : MonoBehaviour
             int randNum = Random.Range(0, 3);
             if(randNum == 0)//spawn common theme platform
             {
-                InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList);
+                InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList, false);
             }else if(randNum == 1)//spawn different theme's platform.
             {
                 switch(groupType)
                 {
                     case PlatformGroupType.normal:
-                        InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList);
+                        InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList, false);
                         break;
                     case PlatformGroupType.winter:
-                        InitiateCustomizedPlatformGroup(varsContainer.winterPlatformGroupList);
+                        InitiateCustomizedPlatformGroup(varsContainer.winterPlatformGroupList, false);
                         break;
                     case PlatformGroupType.forest:
-                        InitiateCustomizedPlatformGroup(varsContainer.forestPlatformGroupList);
+                        InitiateCustomizedPlatformGroup(varsContainer.forestPlatformGroupList, false);
                         break;
                     case PlatformGroupType.fire:
-                        InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList);
+                        InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList, false);
                         break;
                 }
             }else // spawn spike trap combination
             {
                 spawnSpikesPlatformCount = 4;
                 isSpawningSpikePlatform = true;
-                GameObject spikePlatformGroupGo = InitiateCustomizedPlatformGroup(varsContainer.spikePlatformGroupList);
+                GameObject spikePlatformGroupGo = InitiateCustomizedPlatformGroup(varsContainer.spikePlatformGroupList, true);
                 Transform spikeTf = spikePlatformGroupGo.transform.Find("Obstacle").transform;
                 SpawnPlatformAfterSpikeInitiated(spikeTf);
             }
@@ -142,13 +146,13 @@ public class PlatformSpawner : MonoBehaviour
         if (isLeftSpawan)
         {
             //Spawn platform on left hand side.
-            spawnPlatformPosition = new Vector3(spawnPlatformPosition.x - varsContainer.nextPosX,
-                spawnPlatformPosition.y + varsContainer.nextPosY,0f);
+            nextSpawnPlatformPosition = new Vector3(nextSpawnPlatformPosition.x - varsContainer.nextPosX,
+                nextSpawnPlatformPosition.y + varsContainer.nextPosY,0f);
         }else
         {
             //Spawn platform on right hand side.
-            spawnPlatformPosition = new Vector3(spawnPlatformPosition.x + varsContainer.nextPosX,
-                spawnPlatformPosition.y + varsContainer.nextPosY,0f);
+            nextSpawnPlatformPosition = new Vector3(nextSpawnPlatformPosition.x + varsContainer.nextPosX,
+                nextSpawnPlatformPosition.y + varsContainer.nextPosY,0f);
         }
     }
 
@@ -156,15 +160,23 @@ public class PlatformSpawner : MonoBehaviour
     {
         GameObject platformGo = Object.Instantiate(varsContainer.normalPlatformGo, transform);
         platformGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
-        platformGo.transform.position = spawnPlatformPosition;
+        platformGo.transform.position = nextSpawnPlatformPosition;
     }
 
-    private GameObject InitiateCustomizedPlatformGroup(List<GameObject> platformGroupThemeList)
+    private GameObject InitiateCustomizedPlatformGroup(List<GameObject> platformGroupThemeList, bool isSpawnSpike)
     {
-        int randomIndex = Random.Range(0, platformGroupThemeList.Count);
-        GameObject platformGroupGo = Object.Instantiate(platformGroupThemeList[randomIndex], transform);
+        int spawnIndex;
+        if (isSpawnSpike)
+        {
+            spawnIndex = isLeftSpawan ? 1 : 0;
+        }
+        else
+        {
+            spawnIndex = Random.Range(0, platformGroupThemeList.Count);
+        }
+        GameObject platformGroupGo = Object.Instantiate(platformGroupThemeList[spawnIndex], transform);
         platformGroupGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
-        platformGroupGo.transform.position = spawnPlatformPosition;
+        platformGroupGo.transform.position = nextSpawnPlatformPosition;
         return platformGroupGo;
     }
 
@@ -221,15 +233,15 @@ public class PlatformSpawner : MonoBehaviour
                 platformGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
                 if (i==0)//spawn the platform on orginal direction. It should be the contray way with spike one.
                 {
-                    platformGo.transform.position = spawnPlatformPosition;
+                    platformGo.transform.position = nextSpawnPlatformPosition;
                     if (isSpikeOnLeftHandSide)
                     {
-                        spawnPlatformPosition = new Vector3(spawnPlatformPosition.x + varsContainer.nextPosX,
-                            spawnPlatformPosition.y + varsContainer.nextPosY, 0f);
+                        nextSpawnPlatformPosition = new Vector3(nextSpawnPlatformPosition.x + varsContainer.nextPosX,
+                            nextSpawnPlatformPosition.y + varsContainer.nextPosY, 0f);
                     }else
                     {
-                        spawnPlatformPosition = new Vector3(spawnPlatformPosition.x - varsContainer.nextPosX,
-                            spawnPlatformPosition.y + varsContainer.nextPosY, 0f);
+                        nextSpawnPlatformPosition = new Vector3(nextSpawnPlatformPosition.x - varsContainer.nextPosX,
+                            nextSpawnPlatformPosition.y + varsContainer.nextPosY, 0f);
                     }
                 }else//spawn the platform on spike's platform direction
                 {

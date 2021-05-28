@@ -280,7 +280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4810952859880059621}
-  - component: {fileID: 7250991494708829241}
+  - component: {fileID: 5870155223660340619}
   - component: {fileID: 7173487078274111287}
   - component: {fileID: 4097106029054396756}
   - component: {fileID: 2584593012309996211}
@@ -308,7 +308,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7250991494708829241
+--- !u!61 &5870155223660340619
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
