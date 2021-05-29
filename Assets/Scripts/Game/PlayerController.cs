@@ -26,9 +26,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private ManagerVars varsContainer;
 
+    private Transform rayCastTf;
+
+    public LayerMask playerLayerMask;
+
     private void Awake()
     {
         varsContainer = ManagerVars.GetManagerVarsContainer();
+        rayCastTf = transform.Find("RayCastGo");
     }
 
     // Update is called once per frame
@@ -51,6 +56,13 @@ public class PlayerController : MonoBehaviour
             }
             PlayerJump();
         }
+        if(GetComponent<Rigidbody2D>().velocity.y < 0f && !IsPlayerJumpCastRay() && GameManager.Instance().isGameOver == false)
+        {
+            GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+            GetComponent<BoxCollider2D>().enabled = false;
+            GameManager.Instance().isGameOver = true;
+            //TODO UI GameOver
+        }
     }
 
     private void PlayerJump()
@@ -66,6 +78,20 @@ public class PlayerController : MonoBehaviour
             DoTweenPlayerJumpAnimation(nextRightPlatformPos);
         }
         EventCenter.BroadCast(EventType.DecidePath);
+    }
+
+    private bool IsPlayerJumpCastRay()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(rayCastTf.position, Vector2.down, 1f, playerLayerMask);
+        if(hit.collider != null)
+        {
+            Debug.Log(hit.collider.name);
+            if (hit.collider.tag == "Platform")
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void DoTweenPlayerJumpAnimation(Vector3 jumpDirection)

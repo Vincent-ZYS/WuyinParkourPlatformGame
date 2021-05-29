@@ -1606,7 +1606,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9c7f8abaceea58e4db628c3935ed7c4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6976,6 +6976,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef38aa5adbe9bb4bba8ced972d9e127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalPlatformGoList: []
+  commonPlatformGroupGoList: []
+  winterPlatformGroupGoList: []
+  forestPlatformGroupGoList: []
+  SpikePlatformGroupGoList: []
+  varsContainer: {fileID: 0}
 --- !u!4 &2017765077
 Transform:
   m_ObjectHideFlags: 0

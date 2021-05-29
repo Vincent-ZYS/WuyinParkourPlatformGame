@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1583468653
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300018, guid: 20da7e56cbb26b3498b25fb61fa9a7ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 4746065750172903146}
   - component: {fileID: 5111730171797941732}
   - component: {fileID: -2458700483630252865}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: platform_CommonGroup_01
   m_TagString: Platform
   m_Icon: {fileID: 0}
