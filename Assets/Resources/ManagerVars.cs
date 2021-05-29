@@ -40,7 +40,7 @@ public class ManagerVars : ScriptableObject
     /// </summary>
     public GameObject normalPlatformGo;
 
-    public List<GameObject> normalPlatformGroupList = new List<GameObject>();
+    public List<GameObject> commonPlatformGroupList = new List<GameObject>();
 
     public List<GameObject> forestPlatformGroupList = new List<GameObject>();
 

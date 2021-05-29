@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public enum PlatformGroupType
 {
-    normal,
+    common,
     forest,
     fire,
-    winter
+    winter,
+    spike
 }
 
 public class PlatformSpawner : MonoBehaviour
@@ -112,17 +114,17 @@ public class PlatformSpawner : MonoBehaviour
             InitiateSingleNormalPlatform();
         }else if(spawnPlatformCount == 0)
         {
-            //Spawn the combined theme platform. And it will also spawn the stab platform.
+            //Spawn the combined theme platform. And it will also spawn the spike platform.
             int randNum = Random.Range(0, 3);
             if(randNum == 0)//spawn common theme platform
             {
-                InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList, false);
+                InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
             }else if(randNum == 1)//spawn different theme's platform.
             {
                 switch(groupType)
                 {
-                    case PlatformGroupType.normal:
-                        InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList, false);
+                    case PlatformGroupType.common:
+                        InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
                         break;
                     case PlatformGroupType.winter:
                         InitiateCustomizedPlatformGroup(varsContainer.winterPlatformGroupList, false);
@@ -131,7 +133,7 @@ public class PlatformSpawner : MonoBehaviour
                         InitiateCustomizedPlatformGroup(varsContainer.forestPlatformGroupList, false);
                         break;
                     case PlatformGroupType.fire:
-                        InitiateCustomizedPlatformGroup(varsContainer.normalPlatformGroupList, false);
+                        InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
                         break;
                 }
             }else // spawn spike trap combination
@@ -158,23 +160,20 @@ public class PlatformSpawner : MonoBehaviour
 
     private void InitiateSingleNormalPlatform()
     {
-        GameObject platformGo = Object.Instantiate(varsContainer.normalPlatformGo, transform);
+        GameObject platformGo = ObjectPool.Instance().GetSpecifiPlatformInPool(varsContainer.normalPlatformGo, null);
+        platformGo.SetActive(true);
         platformGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
         platformGo.transform.position = nextSpawnPlatformPosition;
     }
 
     private GameObject InitiateCustomizedPlatformGroup(List<GameObject> platformGroupThemeList, bool isSpawnSpike)
     {
-        int spawnIndex;
-        if (isSpawnSpike)
+        if(isSpawnSpike)
         {
-            spawnIndex = isLeftSpawan ? 1 : 0;
+            ObjectPool.Instance().IsLeftSpawnSpike = !isLeftSpawan;
         }
-        else
-        {
-            spawnIndex = Random.Range(0, platformGroupThemeList.Count);
-        }
-        GameObject platformGroupGo = Object.Instantiate(platformGroupThemeList[spawnIndex], transform);
+        GameObject platformGroupGo = ObjectPool.Instance().GetSpecifiPlatformInPool(null, platformGroupThemeList);
+        platformGroupGo.SetActive(true);
         platformGroupGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
         platformGroupGo.transform.position = nextSpawnPlatformPosition;
         return platformGroupGo;
@@ -187,7 +186,7 @@ public class PlatformSpawner : MonoBehaviour
         switch(randomIndex)
         {
             case 0:
-                groupType = PlatformGroupType.normal;
+                groupType = PlatformGroupType.common;
                 break;
             case 1:
                 groupType = PlatformGroupType.forest;
@@ -229,8 +228,10 @@ public class PlatformSpawner : MonoBehaviour
             spawnSpikesPlatformCount--;
             for(int i = 0; i < 2; i++)
             {
-                GameObject platformGo = Object.Instantiate(varsContainer.normalPlatformGo, transform);
+                GameObject platformGo = ObjectPool.Instance().GetSpecifiPlatformInPool(varsContainer.normalPlatformGo, null);
+                //Object.Instantiate(varsContainer.normalPlatformGo, transform);
                 platformGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
+                platformGo.SetActive(true);
                 if (i==0)//spawn the platform on orginal direction. It should be the contray way with spike one.
                 {
                     platformGo.transform.position = nextSpawnPlatformPosition;
