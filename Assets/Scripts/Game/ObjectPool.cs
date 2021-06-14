@@ -8,7 +8,7 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     private static ObjectPool _instance;
-    public const int initSpawnSingleObjectCount = 6;
+    public const int initSpawnSingleObjectCount = 5;
     public List<GameObject> normalPlatformGoList = new List<GameObject>();
     public List<GameObject> commonPlatformGroupGoList = new List<GameObject>();
     public List<GameObject> winterPlatformGroupGoList = new List<GameObject>();
@@ -18,6 +18,7 @@ public class ObjectPool : MonoBehaviour
     private int spawnIndex;
     private bool isHavingSpawnIndex = false;
     private bool isSpawningSpike = false;
+    private bool isSpikeGroupListFilled = false;
     private GameObject spawningSpikeGo;
     private PlatformGroupType curGroupTypeTheme;
     public PlatformGroupType CurGroupTypeTheme { set { curGroupTypeTheme = value; } }
@@ -112,17 +113,24 @@ public class ObjectPool : MonoBehaviour
         if(isSpawningSpike)
         {
             isSpawningSpike = false;
-            return spawningSpikeGo;
-        }
-        for (int i = 0; i < poolList.Count; i++)
-        {
-            if(isHavingSpawnIndex && i != spawnIndex)
+            if(!isSpikeGroupListFilled)
             {
-                continue;
+                return spawningSpikeGo;
             }
-            if(poolList[i].activeInHierarchy == false)
+            isSpikeGroupListFilled = false;
+        }
+        else
+        {
+            for (int i = 0; i < poolList.Count; i++)
             {
-                return poolList[i];
+                if (isHavingSpawnIndex && i != spawnIndex)
+                {
+                    continue;
+                }
+                if (poolList[i].activeInHierarchy == false)
+                {
+                    return poolList[i];
+                }
             }
         }
         return InitGoListForPool(ref poolList, varsGo, varsGoGroupList);
@@ -156,14 +164,16 @@ public class ObjectPool : MonoBehaviour
             }
             else if(varsGoGroupList == varsContainer.spikePlatformGroupList)
             {
-                //TODO
+                //TODO BUG FIXING
+                Debug.Log("+1 Spike");
                 isSpawningSpike = true;
                 finalGoList = SpikePlatformGroupGoList;
                 for (int i = 0; i < SpikePlatformGroupGoList.Count; i++)
                 {
                     if (SpikePlatformGroupGoList[i].activeInHierarchy == false)
                     {
-                        if(isLeftSpawnSpike && (i==0 || i%2==0))
+                        isSpikeGroupListFilled = false;
+                        if (isLeftSpawnSpike && (i==0 || i%2==0))
                         {
                             spawningSpikeGo = SpikePlatformGroupGoList[i];
                             break;
@@ -171,6 +181,10 @@ public class ObjectPool : MonoBehaviour
                         {
                             spawningSpikeGo = SpikePlatformGroupGoList[i];
                             break;
+                        }else
+                        {
+                            //TODO BOOL
+                            isSpikeGroupListFilled = true;
                         }
                     }
                 }

@@ -116,7 +116,6 @@ public class PlatformSpawner : MonoBehaviour
         {
             //Spawn the combined theme platform. And it will also spawn the spike platform.
             int randNum = Random.Range(0, 3);
-            Debug.Log("CurRandNum:" + randNum);
             if(randNum == 0)//spawn common theme platform
             {
                 InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
