@@ -42,7 +42,7 @@ public class PlatformSpawner : MonoBehaviour
     /// <summary>
     /// The enum parameter to store platform group type.
     /// </summary>
-    private PlatformGroupType groupType;
+    private PlatformGroupType curGroupType;
     /// <summary>
     /// Spawn the platform after the spike's spawn.
     /// </summary>
@@ -64,6 +64,7 @@ public class PlatformSpawner : MonoBehaviour
     {
         EventCenter.AddListner(EventType.DecidePath, DecidePath);
         varsContainer = ManagerVars.GetManagerVarsContainer();
+        RandomlyChoosePlatformTheme();
     }
 
     private void OnDestroy()
@@ -73,7 +74,6 @@ public class PlatformSpawner : MonoBehaviour
 
     private void Start()
     {
-        RandomlyChoosePlatformTheme();
         InitiateBeginPlatform();
         SpawnClassicPlayerCharacter();
     }
@@ -116,12 +116,13 @@ public class PlatformSpawner : MonoBehaviour
         {
             //Spawn the combined theme platform. And it will also spawn the spike platform.
             int randNum = Random.Range(0, 3);
+            Debug.Log("CurRandNum:" + randNum);
             if(randNum == 0)//spawn common theme platform
             {
                 InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
             }else if(randNum == 1)//spawn different theme's platform.
             {
-                switch(groupType)
+                switch(curGroupType)
                 {
                     case PlatformGroupType.common:
                         InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
@@ -176,6 +177,13 @@ public class PlatformSpawner : MonoBehaviour
         platformGroupGo.SetActive(true);
         platformGroupGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
         platformGroupGo.transform.position = nextSpawnPlatformPosition;
+        if(!isSpawnSpike && isLeftSpawan && platformGroupGo.transform.Find("Obstacle") != null)
+        {
+            platformGroupGo.transform.Find("Obstacle").transform.localPosition = new Vector3(1.1f, 0f, 0f);
+        }else if(!isSpawnSpike && !isLeftSpawan && platformGroupGo.transform.Find("Obstacle") != null)
+        {
+            platformGroupGo.transform.Find("Obstacle").transform.localPosition = new Vector3(-1.1f, 0f, 0f);
+        }
         return platformGroupGo;
     }
 
@@ -186,18 +194,19 @@ public class PlatformSpawner : MonoBehaviour
         switch(randomIndex)
         {
             case 0:
-                groupType = PlatformGroupType.common;
+                curGroupType = PlatformGroupType.common;
                 break;
             case 1:
-                groupType = PlatformGroupType.forest;
+                curGroupType = PlatformGroupType.forest;
                 break;
             case 2:
-                groupType = PlatformGroupType.winter;
+                curGroupType = PlatformGroupType.winter;
                 break;
             case 3:
-                groupType = PlatformGroupType.fire;
+                curGroupType = PlatformGroupType.fire;
                 break;
         }
+        ObjectPool.Instance().CurGroupTypeTheme = curGroupType; //Pass the platform theme type to Object Pool.
     }
 
     private void SpawnClassicPlayerCharacter()

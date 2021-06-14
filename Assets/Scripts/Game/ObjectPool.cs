@@ -8,7 +8,7 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     private static ObjectPool _instance;
-    public const int initSpawnSingleObjectCount = 5;
+    public const int initSpawnSingleObjectCount = 6;
     public List<GameObject> normalPlatformGoList = new List<GameObject>();
     public List<GameObject> commonPlatformGroupGoList = new List<GameObject>();
     public List<GameObject> winterPlatformGroupGoList = new List<GameObject>();
@@ -19,6 +19,8 @@ public class ObjectPool : MonoBehaviour
     private bool isHavingSpawnIndex = false;
     private bool isSpawningSpike = false;
     private GameObject spawningSpikeGo;
+    private PlatformGroupType curGroupTypeTheme;
+    public PlatformGroupType CurGroupTypeTheme { set { curGroupTypeTheme = value; } }
 
     private bool isLeftSpawnSpike = false;
     public bool IsLeftSpawnSpike { set { isLeftSpawnSpike = value; } }
@@ -35,16 +37,33 @@ public class ObjectPool : MonoBehaviour
     private void Awake()
     {
         varsContainer = ManagerVars.GetManagerVarsContainer();
+    }
+
+    private void Start()
+    {
         ObjectPoolInit();
     }
 
     private void ObjectPoolInit()
     {
         InitGoListForPool(ref normalPlatformGoList, varsContainer.normalPlatformGo, null);
-        InitGoListForPool(ref commonPlatformGroupGoList, null, varsContainer.commonPlatformGroupList);
-        InitGoListForPool(ref winterPlatformGroupGoList, null, varsContainer.winterPlatformGroupList);
-        InitGoListForPool(ref forestPlatformGroupGoList, null, varsContainer.forestPlatformGroupList);
         InitGoListForPool(ref SpikePlatformGroupGoList, null, varsContainer.spikePlatformGroupList);
+        InitGoListForPool(ref commonPlatformGroupGoList, null, varsContainer.commonPlatformGroupList);
+        switch (curGroupTypeTheme)
+        {
+            case PlatformGroupType.common:
+                InitGoListForPool(ref commonPlatformGroupGoList, null, varsContainer.commonPlatformGroupList);
+                break;
+            case PlatformGroupType.winter:
+                InitGoListForPool(ref winterPlatformGroupGoList, null, varsContainer.winterPlatformGroupList);
+                break;
+            case PlatformGroupType.forest:
+                InitGoListForPool(ref forestPlatformGroupGoList, null, varsContainer.forestPlatformGroupList);
+                break;
+            case PlatformGroupType.fire:
+                InitGoListForPool(ref commonPlatformGroupGoList, null, varsContainer.commonPlatformGroupList);
+                break;
+        }
     }
 
     /// <summary>
@@ -123,17 +142,17 @@ public class ObjectPool : MonoBehaviour
             if (varsGoGroupList == varsContainer.commonPlatformGroupList)
             {
                 finalGoList = commonPlatformGroupGoList;
-                spawnIndex = Random.Range(1, commonPlatformGroupGoList.Count);
+                spawnIndex = Random.Range(0, commonPlatformGroupGoList.Count);
             }
             else if(varsGoGroupList == varsContainer.winterPlatformGroupList)
             {
                 finalGoList = winterPlatformGroupGoList;
-                spawnIndex = Random.Range(1, winterPlatformGroupGoList.Count);
+                spawnIndex = Random.Range(0, winterPlatformGroupGoList.Count);
             }
             else if(varsGoGroupList == varsContainer.forestPlatformGroupList)
             {
                 finalGoList = forestPlatformGroupGoList;
-                spawnIndex = Random.Range(1, forestPlatformGroupGoList.Count);
+                spawnIndex = Random.Range(0, forestPlatformGroupGoList.Count);
             }
             else if(varsGoGroupList == varsContainer.spikePlatformGroupList)
             {

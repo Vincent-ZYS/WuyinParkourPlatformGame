@@ -26,24 +26,28 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private ManagerVars varsContainer;
 
-    private Transform rayCastTf;
+    private Transform rayCastDwTf;
+    private Transform rayCastFwTf;
 
-    public LayerMask playerLayerMask;
+    public LayerMask platformLayerMask;
+
+    public LayerMask spikeLayerMask;
 
     private void Awake()
     {
         varsContainer = ManagerVars.GetManagerVarsContainer();
-        rayCastTf = transform.Find("RayCastGo");
+        rayCastDwTf = transform.Find("RayCastDwGo");
+        rayCastFwTf = transform.Find("RayCastFwGo");
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!GameManager.Instance().isGameStart || GameManager.Instance().isGameOver) { return; }
-        ClickLeftScreenToMove();
+        ClickLeftRightScreenToMove();
     }
 
-    private void ClickLeftScreenToMove()
+    private void ClickLeftRightScreenToMove()
     {
         if(Input.GetMouseButtonDown(0) && !isJumping)
         {
@@ -56,7 +60,12 @@ public class PlayerController : MonoBehaviour
             }
             PlayerJump();
         }
-        if(GetComponent<Rigidbody2D>().velocity.y < 0f && !IsPlayerJumpCastRay() && GameManager.Instance().isGameOver == false)
+        if (GetComponent<Rigidbody2D>().velocity.y < 0f && IsPlayerJumpCastFwRay() && GameManager.Instance().isGameOver == false)
+        {
+            Debug.Log("GameOver");
+            Destroy(gameObject);
+        }
+        if (GetComponent<Rigidbody2D>().velocity.y < 0f && !IsPlayerJumpCastDwRay() && GameManager.Instance().isGameOver == false)
         {
             GetComponent<SpriteRenderer>().sortingLayerName = "Default";
             GetComponent<BoxCollider2D>().enabled = false;
@@ -80,14 +89,29 @@ public class PlayerController : MonoBehaviour
         EventCenter.BroadCast(EventType.DecidePath);
     }
 
-    private bool IsPlayerJumpCastRay()
+    private bool IsPlayerJumpCastDwRay()
     {
-        RaycastHit2D hit = Physics2D.Raycast(rayCastTf.position, Vector2.down, 1f, playerLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(rayCastDwTf.position, Vector2.down, 1f, platformLayerMask);
         if(hit.collider != null)
         {
-            Debug.Log(hit.collider.name);
             if (hit.collider.tag == "Platform")
             {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsPlayerJumpCastFwRay()
+    {
+        float isLeftOrNot = isMoveLeft ? -0.3f : 0.3f;
+        RaycastHit2D hit = Physics2D.Raycast(rayCastFwTf.position, Vector2.right, isLeftOrNot, spikeLayerMask);
+        Debug.DrawRay(rayCastFwTf.position, isLeftOrNot * Vector2.right, Color.red);
+        if(hit.collider != null)
+        {
+            if(hit.collider.tag == "Obstacle")
+            {
+                Debug.LogError("TOUCH!!");
                 return true;
             }
         }
