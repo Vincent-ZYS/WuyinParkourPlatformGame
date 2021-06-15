@@ -118,22 +118,22 @@ public class PlatformSpawner : MonoBehaviour
             int randNum = Random.Range(0, 3);
             if(randNum == 0)//spawn common theme platform
             {
-                InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
+                InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList);
             }else if(randNum == 1)//spawn different theme's platform.
             {
                 switch(curGroupType)
                 {
                     case PlatformGroupType.common:
-                        InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
+                        InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList);
                         break;
                     case PlatformGroupType.winter:
-                        InitiateCustomizedPlatformGroup(varsContainer.winterPlatformGroupList, false);
+                        InitiateCustomizedPlatformGroup(varsContainer.winterPlatformGroupList);
                         break;
                     case PlatformGroupType.forest:
-                        InitiateCustomizedPlatformGroup(varsContainer.forestPlatformGroupList, false);
+                        InitiateCustomizedPlatformGroup(varsContainer.forestPlatformGroupList);
                         break;
                     case PlatformGroupType.fire:
-                        InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList, false);
+                        InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList);
                         break;
                 }
             }else // spawn spike trap combination
@@ -166,7 +166,7 @@ public class PlatformSpawner : MonoBehaviour
         platformGo.transform.position = nextSpawnPlatformPosition;
     }
 
-    private GameObject InitiateCustomizedPlatformGroup(List<GameObject> platformGroupThemeList, bool isSpawnSpike)
+    private GameObject InitiateCustomizedPlatformGroup(List<GameObject> platformGroupThemeList, bool isSpawnSpike = false)
     {
         if(isSpawnSpike)
         {
