@@ -8,13 +8,13 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     private static ObjectPool _instance;
-    public const int initSpawnSingleObjectCount = 5;
-    public List<GameObject> normalPlatformGoList = new List<GameObject>();
-    public List<GameObject> commonPlatformGroupGoList = new List<GameObject>();
-    public List<GameObject> winterPlatformGroupGoList = new List<GameObject>();
-    public List<GameObject> forestPlatformGroupGoList = new List<GameObject>();
-    public List<GameObject> SpikePlatformGroupGoList = new List<GameObject>();
-    public ManagerVars varsContainer;
+    private const int initSpawnSingleObjectCount = 5;
+    private List<GameObject> normalPlatformGoList = new List<GameObject>();
+    private List<GameObject> commonPlatformGroupGoList = new List<GameObject>();
+    private List<GameObject> winterPlatformGroupGoList = new List<GameObject>();
+    private List<GameObject> forestPlatformGroupGoList = new List<GameObject>();
+    private List<GameObject> SpikePlatformGroupGoList = new List<GameObject>();
+    private ManagerVars varsContainer;
     private int spawnIndex;
     private bool isHavingSpawnIndex = false;
     private bool isSpawningSpike = false;
@@ -183,7 +183,6 @@ public class ObjectPool : MonoBehaviour
     private void FindAppropriateSpikeGroup()
     {
         isSpawningSpike = true;
-        Debug.Log("Spike+1");
         for (int i = 0; i < SpikePlatformGroupGoList.Count; i++)
         {
             if (SpikePlatformGroupGoList[i].activeInHierarchy == false)

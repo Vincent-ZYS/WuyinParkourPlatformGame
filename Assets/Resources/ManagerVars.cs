@@ -34,12 +34,20 @@ public class ManagerVars : ScriptableObject
     /// The platform next spawn position.
     /// </summary>
     public float nextPosX = 0.55f, nextPosY = 0.64f;
-    
+
     /// <summary>
     /// The normal platform gameobject prefab.
     /// </summary>
     public GameObject normalPlatformGo;
 
+    /// <summary>
+    /// The dead effect game object of player.
+    /// </summary>
+    public GameObject playerDeadEffectGo;
+
+    /// <summary>
+    /// Several relevant platform game object group list.
+    /// </summary>
     public List<GameObject> commonPlatformGroupList = new List<GameObject>();
 
     public List<GameObject> forestPlatformGroupList = new List<GameObject>();

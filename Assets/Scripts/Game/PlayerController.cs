@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
@@ -43,7 +44,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.Instance().isGameStart || GameManager.Instance().isGameOver) { return; }
+        if (!GameManager.Instance().isGameStart || 
+            GameManager.Instance().isGameOver || 
+            GameManager.Instance().isGamePause || EventSystem.current.IsPointerOverGameObject()) { return; }
         ClickLeftRightScreenToMove();
     }
 
@@ -60,17 +63,28 @@ public class PlayerController : MonoBehaviour
             }
             PlayerJump();
         }
-        if (GetComponent<Rigidbody2D>().velocity.y < 0f && IsPlayerJumpCastFwRay() && GameManager.Instance().isGameOver == false)
+        PlayerGameOverOrNot();
+    }
+
+    private void PlayerGameOverOrNot()
+    {
+        if(GetComponent<Rigidbody2D>().velocity.y < 0f && GameManager.Instance().isGameOver == false)
         {
-            Debug.Log("GameOver");
-            Destroy(gameObject);
-        }
-        if (GetComponent<Rigidbody2D>().velocity.y < 0f && !IsPlayerJumpCastDwRay() && GameManager.Instance().isGameOver == false)
-        {
-            GetComponent<SpriteRenderer>().sortingLayerName = "Default";
-            GetComponent<BoxCollider2D>().enabled = false;
-            GameManager.Instance().isGameOver = true;
-            //TODO UI GameOver
+            if (!IsPlayerJumpCastDwRay())
+            {
+                GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+                GetComponent<BoxCollider2D>().enabled = false;
+                GameManager.Instance().isGameOver = true;
+                Debug.Log("GameOver");
+            }
+            else if(IsPlayerJumpCastFwRay())
+            {
+                GameObject deadEffect = Instantiate(varsContainer.playerDeadEffectGo);
+                deadEffect.transform.position = transform.position;
+                GameManager.Instance().isGameOver = true;
+                Debug.Log("GameOver");
+                Destroy(gameObject);
+            }
         }
     }
 

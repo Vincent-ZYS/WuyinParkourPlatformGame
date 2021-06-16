@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     /// The Flag to judge current game is over or not.
     /// </summary>
     public bool isGameOver { get; set; }
+    /// <summary>
+    /// The Flag to judge current gasme is paused or not.
+    /// </summary>
+    public bool isGamePause { get; set; }
 
     public static GameManager Instance()
     {

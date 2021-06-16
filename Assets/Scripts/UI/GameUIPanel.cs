@@ -43,17 +43,12 @@ public class GameUIPanel : MonoBehaviour
     /// </summary>
     private void OnPauseGameBtnClick()
     {
-        if(!startGame_Img.enabled)
-        {
-            //TODO PAUSE GAME
-            pause_Btn.gameObject.GetComponent<Image>().enabled = false;
-            startGame_Img.enabled = true;
-        }else
-        {
-            //TODO START GAME
-            pause_Btn.gameObject.GetComponent<Image>().enabled = true;
-            startGame_Img.enabled = false;
-        }
+        //PAUSE GAME OR NOT
+        bool isGamePause = GameManager.Instance().isGamePause;
+        pause_Btn.gameObject.GetComponent<Image>().enabled = isGamePause;
+        startGame_Img.enabled = !isGamePause;
+        GameManager.Instance().isGamePause = !isGamePause;
+        Time.timeScale = isGamePause ? 1f : 0f;
     }
 
     private void OnDestroy()
