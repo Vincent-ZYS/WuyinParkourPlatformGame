@@ -2,4 +2,6 @@
 {
     ShowGamePanel,
     DecidePath,
+    AddPlayerScore,
+    UpdatePlayerUIScore
 }

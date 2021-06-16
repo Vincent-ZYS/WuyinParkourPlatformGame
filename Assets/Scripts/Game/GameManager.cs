@@ -20,7 +20,20 @@ public class GameManager : MonoBehaviour
     /// The Flag to judge current gasme is paused or not.
     /// </summary>
     public bool isGamePause { get; set; }
+    /// <summary>
+    /// To store current player's score.
+    /// </summary>
+    public int playerScore { get; set; }
 
+    private void Awake()
+    {
+        EventCenter.AddListner(EventType.AddPlayerScore, AddCurrentPlayerScore);
+    }
+
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener(EventType.AddPlayerScore, AddCurrentPlayerScore);
+    }
     public static GameManager Instance()
     {
         if(_instance==null)
@@ -28,5 +41,11 @@ public class GameManager : MonoBehaviour
             _instance = FindObjectOfType<GameManager>();
         }
         return _instance;
+    }
+
+    public void AddCurrentPlayerScore()
+    {
+        //TODO
+        playerScore += 5;
     }
 }

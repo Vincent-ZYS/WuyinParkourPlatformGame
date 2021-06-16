@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     /// The configuration parameter management container.
     /// </summary>
     private ManagerVars varsContainer;
+    /// <summary>
+    /// To store the platofrm which player currently standing.
+    /// </summary>
+    private GameObject curStandingPlatform;
 
     private Transform rayCastDwTf;
     private Transform rayCastFwTf;
@@ -110,6 +114,18 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.tag == "Platform")
             {
+                if(curStandingPlatform != hit.collider.gameObject)
+                {
+                    //To broad cast an add score event.
+                    if (curStandingPlatform == null)
+                    {
+                        curStandingPlatform = hit.collider.gameObject;
+                        return true;
+                    }
+                    curStandingPlatform = hit.collider.gameObject;
+                    EventCenter.BroadCast(EventType.AddPlayerScore);
+                    EventCenter.BroadCast(EventType.UpdatePlayerUIScore, GameManager.Instance().playerScore);
+                }
                 return true;
             }
         }

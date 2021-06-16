@@ -29,6 +29,8 @@ MonoBehaviour:
   nextPosY: 0.64
   normalPlatformGo: {fileID: 7377933233478332101, guid: f46a766c58b1295478f78f503b9e6724,
     type: 3}
+  playerDeadEffectGo: {fileID: 538468622457588480, guid: e781bc77a49ac0441b33ada42edc8fa4,
+    type: 3}
   commonPlatformGroupList:
   - {fileID: 5329402263525587413, guid: 68befa9c4ef81984997b9a9d2c21024e, type: 3}
   - {fileID: 3365178335764183602, guid: 1e9cd86171292e8479ef0f67a1283f6f, type: 3}

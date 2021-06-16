@@ -13,6 +13,7 @@ public class GameUIPanel : MonoBehaviour
     private void Awake()
     {
         EventCenter.AddListner(EventType.ShowGamePanel, ShowGameUIPanel);
+        EventCenter.AddListner<int>(EventType.UpdatePlayerUIScore, UpdatePlayerUIScore);
         Initiation();
     }
 
@@ -38,6 +39,11 @@ public class GameUIPanel : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    private void UpdatePlayerUIScore(int curScore)
+    {
+        currentScore_Txt.text = curScore.ToString();
+    }
+
     /// <summary>
     /// Current panel's pause button click logic function.
     /// </summary>
@@ -54,5 +60,6 @@ public class GameUIPanel : MonoBehaviour
     private void OnDestroy()
     {
         EventCenter.RemoveListener(EventType.ShowGamePanel, ShowGameUIPanel);
+        EventCenter.RemoveListener<int>(EventType.UpdatePlayerUIScore, UpdatePlayerUIScore);
     }
 }
