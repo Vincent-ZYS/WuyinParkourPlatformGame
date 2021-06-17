@@ -1020,6 +1020,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startSpawnPos: {x: 0, y: -2.4, z: 0}
+  MileStoneScore: 50
+  fallTime: 2
+  minFallTime: 0.5
+  fallTimeMultiply: 0.9
 --- !u!4 &867956733
 Transform:
   m_ObjectHideFlags: 0

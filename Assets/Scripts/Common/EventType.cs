@@ -3,5 +3,6 @@
     ShowGamePanel,
     DecidePath,
     AddPlayerScore,
-    UpdatePlayerUIScore
+    UpdatePlayerUIScore,
+    PlatformReadyToFall
 }

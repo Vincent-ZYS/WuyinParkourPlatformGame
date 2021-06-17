@@ -58,7 +58,8 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0) && !isJumping)
         {
-            if(Input.mousePosition.x <= Screen.width/2)
+            EventCenter.BroadCast(EventType.PlatformReadyToFall);
+            if (Input.mousePosition.x <= Screen.width/2)
             {
                 isMoveLeft = true;
             }else if(Input.mousePosition.x > Screen.width/2)

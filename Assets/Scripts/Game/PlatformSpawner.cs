@@ -60,6 +60,11 @@ public class PlatformSpawner : MonoBehaviour
     /// </summary>
     private bool isSpikeOnLeftHandSide = false;
 
+    public int MileStoneScore;
+    public float fallTime;
+    public float minFallTime;
+    public float fallTimeMultiply;
+
     private void Awake()
     {
         EventCenter.AddListner(EventType.DecidePath, DecidePath);
@@ -76,6 +81,27 @@ public class PlatformSpawner : MonoBehaviour
     {
         InitiateBeginPlatform();
         SpawnClassicPlayerCharacter();
+    }
+
+    private void Update()
+    {
+        if(GameManager.Instance().isGameStart && !GameManager.Instance().isGameOver && !GameManager.Instance().isGamePause)
+        {
+            UpdateFallPlatform();
+        }
+    }
+
+    private void UpdateFallPlatform()
+    {
+        if(GameManager.Instance().playerScore >= MileStoneScore)
+        {
+            MileStoneScore *= 2;
+            fallTime *= fallTimeMultiply;
+            if(fallTime <= minFallTime)
+            {
+                fallTime = minFallTime;
+            }
+        }
     }
 
     private void InitiateBeginPlatform()
@@ -162,7 +188,7 @@ public class PlatformSpawner : MonoBehaviour
     {
         GameObject platformGo = ObjectPool.Instance().GetSpecifiPlatformInPool(varsContainer.normalPlatformGo, null);
         platformGo.SetActive(true);
-        platformGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
+        platformGo.GetComponent<PlatformController>().SinglePlatformInitation(chosenPlatformSprite, fallTime);
         platformGo.transform.position = nextSpawnPlatformPosition;
     }
 
@@ -174,7 +200,7 @@ public class PlatformSpawner : MonoBehaviour
         }
         GameObject platformGroupGo = ObjectPool.Instance().GetSpecifiPlatformInPool(null, platformGroupThemeList);
         platformGroupGo.SetActive(true);
-        platformGroupGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
+        platformGroupGo.GetComponent<PlatformController>().SinglePlatformInitation(chosenPlatformSprite, fallTime);
         platformGroupGo.transform.position = nextSpawnPlatformPosition;
         if(!isSpawnSpike && isLeftSpawan && platformGroupGo.transform.Find("Obstacle") != null)
         {
@@ -238,7 +264,7 @@ public class PlatformSpawner : MonoBehaviour
             {
                 GameObject platformGo = ObjectPool.Instance().GetSpecifiPlatformInPool(varsContainer.normalPlatformGo, null);
                 //Object.Instantiate(varsContainer.normalPlatformGo, transform);
-                platformGo.GetComponent<PlatformController>().SinglePlatformThemeSpriteInitation(chosenPlatformSprite);
+                platformGo.GetComponent<PlatformController>().SinglePlatformInitation(chosenPlatformSprite, fallTime);
                 platformGo.SetActive(true);
                 if (i==0)//spawn the platform on orginal direction. It should be the contray way with spike one.
                 {
