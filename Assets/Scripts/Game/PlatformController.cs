@@ -13,6 +13,7 @@ public class PlatformController : MonoBehaviour
     {
         this.fallTime = fallTime;
         isReadyToFall = false;
+        curFallTimer = 0f;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         for (int i=0; i < PlatformSpriteRenderer.Length; i++)
         {
@@ -32,6 +33,7 @@ public class PlatformController : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance().isGameStart && GameManager.Instance().isGameOver && GameManager.Instance().isGamePause) { return; }
         if (fallTime > 0f && isReadyToFall)
         {
             curFallTimer += Time.deltaTime;
