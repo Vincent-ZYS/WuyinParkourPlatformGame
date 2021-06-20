@@ -12,7 +12,7 @@ public class GameUIPanel : MonoBehaviour
 
     private void Awake()
     {
-        EventCenter.AddListner(EventType.ShowGamePanel, ShowGameUIPanel);
+        EventCenter.AddListner<bool>(EventType.ShowGamePanel, ShowGameUIPanel);
         EventCenter.AddListner<int>(EventType.UpdatePlayerUIScore, UpdatePlayerUIScore);
         EventCenter.AddListner<int>(EventType.UpdatePlayerDiamondUICount, UpdateDiamondUICount);
         Initiation();
@@ -37,7 +37,7 @@ public class GameUIPanel : MonoBehaviour
     /// <summary>
     /// The function to activate current UI panel object.
     /// </summary>
-    private void ShowGameUIPanel()
+    private void ShowGameUIPanel(bool isShow)
     {
         gameObject.SetActive(true);
     }
@@ -67,7 +67,7 @@ public class GameUIPanel : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventCenter.RemoveListener(EventType.ShowGamePanel, ShowGameUIPanel);
+        EventCenter.RemoveListener<bool>(EventType.ShowGamePanel, ShowGameUIPanel);
         EventCenter.RemoveListener<int>(EventType.UpdatePlayerUIScore, UpdatePlayerUIScore);
         EventCenter.RemoveListener<int>(EventType.UpdatePlayerDiamondUICount, UpdateDiamondUICount);
     }

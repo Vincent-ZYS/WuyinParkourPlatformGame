@@ -108,6 +108,13 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject GetDiamondGoInPool(GameObject varsGo = null)
     {
+        for(int i = 0; i < DiamondGoList.Count; i ++)
+        {
+            if(!DiamondGoList[i].activeInHierarchy)
+            {
+                return DiamondGoList[i];
+            }
+        }
         return InitGoListForPool(ref DiamondGoList, varsGo);
     }
 
@@ -141,7 +148,7 @@ public class ObjectPool : MonoBehaviour
                 {
                     continue;
                 }
-                if (poolList[i].activeInHierarchy == false)
+                if (!poolList[i].activeInHierarchy)
                 {
                     return poolList[i];
                 }
@@ -191,7 +198,7 @@ public class ObjectPool : MonoBehaviour
         isSpawningSpike = true;
         for (int i = 0; i < SpikePlatformGroupGoList.Count; i++)
         {
-            if (SpikePlatformGroupGoList[i].activeInHierarchy == false)
+            if (!SpikePlatformGroupGoList[i].activeInHierarchy)
             {
                 isSpikeGroupListFilled = false;
                 if (isLeftSpawnSpike && (i == 0 || i % 2 == 0))

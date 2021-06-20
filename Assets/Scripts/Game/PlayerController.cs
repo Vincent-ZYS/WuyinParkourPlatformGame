@@ -88,13 +88,16 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance().isGameOver = true;
                 Debug.Log("GameOver");
                 //TODO Disactive or not?
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+                EventCenter.BroadCast(EventType.ShowGameOverPanel, true);
             }
         }
         if (GameManager.Instance().isGameOver && (transform.position.y - Camera.main.transform.position.y <= -6f))
         {
             //TODO Disactive or not?
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
+            EventCenter.BroadCast(EventType.ShowGameOverPanel,true);
         }
     }
 

@@ -162,7 +162,7 @@ public class PlatformSpawner : MonoBehaviour
                         InitiateCustomizedPlatformGroup(varsContainer.commonPlatformGroupList);
                         break;
                 }
-            }else // spawn spike trap combination
+            }else //spawn spike trap combination
             {
                 spawnSpikesPlatformCount = 4;
                 isSpawningSpikePlatform = true;

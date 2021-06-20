@@ -1,6 +1,7 @@
 ﻿public enum EventType
 {
     ShowGamePanel,
+    ShowGameOverPanel,
     DecidePath,
     PlatformReadyToFall,
     AddPlayerScore,
