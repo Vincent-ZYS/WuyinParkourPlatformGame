@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Platform
   - Obstacle
+  - Diamond
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - 
   - Platform
   - Spike
-  - 
+  - Item
   - 
   - 
   - 
@@ -45,6 +46,9 @@ TagManager:
     locked: 0
   - name: Platform
     uniqueID: 1583468653
+    locked: 0
+  - name: Item
+    uniqueID: 1681680975
     locked: 0
   - name: Player
     uniqueID: 3550591671

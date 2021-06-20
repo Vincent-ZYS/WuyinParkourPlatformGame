@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!GameManager.Instance().isGameStart || 
-            GameManager.Instance().isGameOver || 
             GameManager.Instance().isGamePause || EventSystem.current.IsPointerOverGameObject()) { return; }
         ClickLeftRightScreenToMove();
     }
@@ -73,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerGameOverOrNot()
     {
-        if(GetComponent<Rigidbody2D>().velocity.y < 0f && GameManager.Instance().isGameOver == false)
+        if(GetComponent<Rigidbody2D>().velocity.y < 0f && !GameManager.Instance().isGameOver)
         {
             if (!IsPlayerJumpCastDwRay())
             {
@@ -88,8 +87,14 @@ public class PlayerController : MonoBehaviour
                 deadEffect.transform.position = transform.position;
                 GameManager.Instance().isGameOver = true;
                 Debug.Log("GameOver");
+                //TODO Disactive or not?
                 Destroy(gameObject);
             }
+        }
+        if (GameManager.Instance().isGameOver && (transform.position.y - Camera.main.transform.position.y <= -6f))
+        {
+            //TODO Disactive or not?
+            Destroy(gameObject);
         }
     }
 
@@ -166,5 +171,17 @@ public class PlayerController : MonoBehaviour
                 currentPlatformPos.y + varsContainer.nextPosX,0f);
             isJumping = false;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Diamond")
+        {
+            GameObject pickUpEffect = Instantiate(varsContainer.pickupItemEffectGo);
+            pickUpEffect.transform.position = transform.position;
+            collision.gameObject.SetActive(false);
+            EventCenter.BroadCast(EventType.AddDiamondCount);
+            EventCenter.BroadCast(EventType.UpdatePlayerDiamondUICount, GameManager.Instance().playerDiamondCount);
+        }    
     }
 }

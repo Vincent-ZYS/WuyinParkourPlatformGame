@@ -14,6 +14,7 @@ public class ObjectPool : MonoBehaviour
     private List<GameObject> winterPlatformGroupGoList = new List<GameObject>();
     private List<GameObject> forestPlatformGroupGoList = new List<GameObject>();
     private List<GameObject> SpikePlatformGroupGoList = new List<GameObject>();
+    private List<GameObject> DiamondGoList = new List<GameObject>();
     private ManagerVars varsContainer;
     private int spawnIndex;
     private bool isHavingSpawnIndex = false;
@@ -103,6 +104,11 @@ public class ObjectPool : MonoBehaviour
             }
         }
         return objectGo;
+    }
+
+    public GameObject GetDiamondGoInPool(GameObject varsGo = null)
+    {
+        return InitGoListForPool(ref DiamondGoList, varsGo);
     }
 
     /// <summary>

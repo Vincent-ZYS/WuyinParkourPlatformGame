@@ -46,6 +46,16 @@ public class ManagerVars : ScriptableObject
     public GameObject playerDeadEffectGo;
 
     /// <summary>
+    /// The collecting diamond itme game object prefab.
+    /// </summary>
+    public GameObject diamondItemGo;
+
+    /// <summary>
+    /// The pick up item effect game object of player.
+    /// </summary>
+    public GameObject pickupItemEffectGo;
+
+    /// <summary>
     /// Several relevant platform game object group list.
     /// </summary>
     public List<GameObject> commonPlatformGroupList = new List<GameObject>();

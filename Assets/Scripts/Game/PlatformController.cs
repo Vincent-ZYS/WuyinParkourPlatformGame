@@ -12,7 +12,7 @@ public class PlatformController : MonoBehaviour
     public void SinglePlatformInitation(Sprite sprite, float fallTime)
     {
         this.fallTime = fallTime;
-        isReadyToFall = false;
+        //isReadyToFall = false;
         curFallTimer = 0f;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         for (int i=0; i < PlatformSpriteRenderer.Length; i++)
@@ -40,15 +40,12 @@ public class PlatformController : MonoBehaviour
             if(curFallTimer >= fallTime)
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                StartCoroutine(DealyHide());
+                if (transform.position.y - Camera.main.transform.position.y <= -6f)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
-    }
-
-    private IEnumerator DealyHide()
-    {
-        yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
     }
 
     public void ReadyToFall()

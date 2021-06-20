@@ -31,6 +31,10 @@ MonoBehaviour:
     type: 3}
   playerDeadEffectGo: {fileID: 538468622457588480, guid: e781bc77a49ac0441b33ada42edc8fa4,
     type: 3}
+  diamondItemGo: {fileID: 2701033528585118781, guid: b5683666c223ce246af53c597835a847,
+    type: 3}
+  pickupItemEffectGo: {fileID: 7962538525190898076, guid: c08a2afd5415b0b4d91409b8eb5a4baf,
+    type: 3}
   commonPlatformGroupList:
   - {fileID: 5329402263525587413, guid: 68befa9c4ef81984997b9a9d2c21024e, type: 3}
   - {fileID: 3365178335764183602, guid: 1e9cd86171292e8479ef0f67a1283f6f, type: 3}

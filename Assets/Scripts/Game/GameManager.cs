@@ -24,15 +24,22 @@ public class GameManager : MonoBehaviour
     /// To store current player's score.
     /// </summary>
     public int playerScore { get; set; }
+    /// <summary>
+    /// To store current player's diamond count.
+    /// </summary>
+    public int playerDiamondCount { get; set; }
 
     private void Awake()
     {
         EventCenter.AddListner(EventType.AddPlayerScore, AddCurrentPlayerScore);
+        EventCenter.AddListner(EventType.AddDiamondCount, AddCurrentPlayerDiamondCount); 
+        GameDataInitiate();
     }
 
     private void OnDestroy()
     {
         EventCenter.RemoveListener(EventType.AddPlayerScore, AddCurrentPlayerScore);
+        EventCenter.RemoveListener(EventType.AddDiamondCount, AddCurrentPlayerDiamondCount);
     }
     public static GameManager Instance()
     {
@@ -43,9 +50,22 @@ public class GameManager : MonoBehaviour
         return _instance;
     }
 
+    private void GameDataInitiate()
+    {
+        //Data initiate
+        playerScore = 0;
+        playerDiamondCount = 0;
+    }
+
     public void AddCurrentPlayerScore()
     {
-        //TODO
+        //TODO more efficienct way?
         playerScore += 5;
+    }
+
+    public void AddCurrentPlayerDiamondCount()
+    {
+        //TODO more efficienct way?
+        playerDiamondCount++;
     }
 }

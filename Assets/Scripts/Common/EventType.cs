@@ -2,7 +2,9 @@
 {
     ShowGamePanel,
     DecidePath,
+    PlatformReadyToFall,
     AddPlayerScore,
     UpdatePlayerUIScore,
-    PlatformReadyToFall
+    AddDiamondCount,
+    UpdatePlayerDiamondUICount
 }

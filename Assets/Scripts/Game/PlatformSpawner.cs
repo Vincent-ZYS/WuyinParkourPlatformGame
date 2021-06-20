@@ -171,6 +171,15 @@ public class PlatformSpawner : MonoBehaviour
                 SpawnPlatformAfterSpikeInitiated(spikeTf);
             }
         }
+        //Time to spawan diamond randomly
+        int rdSpwDiamondNum = Random.Range(0, 15);
+        if(rdSpwDiamondNum == 5 && GameManager.Instance().isGameStart)
+        {
+            GameObject diamondGo = ObjectPool.Instance().GetDiamondGoInPool(varsContainer.diamondItemGo);
+            diamondGo.transform.position = new Vector3(nextSpawnPlatformPosition.x, nextSpawnPlatformPosition.y + 0.5f, 0f);
+            diamondGo.SetActive(true);
+        }
+        //To create a new position for next platform.
         if (isLeftSpawan)
         {
             //Spawn platform on left hand side.

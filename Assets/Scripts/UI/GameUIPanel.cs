@@ -14,6 +14,7 @@ public class GameUIPanel : MonoBehaviour
     {
         EventCenter.AddListner(EventType.ShowGamePanel, ShowGameUIPanel);
         EventCenter.AddListner<int>(EventType.UpdatePlayerUIScore, UpdatePlayerUIScore);
+        EventCenter.AddListner<int>(EventType.UpdatePlayerDiamondUICount, UpdateDiamondUICount);
         Initiation();
     }
 
@@ -27,6 +28,8 @@ public class GameUIPanel : MonoBehaviour
         pause_Btn = transform.Find("PauseGame_btn").GetComponent<Button>();
         pause_Btn.onClick.AddListener(OnPauseGameBtnClick);
         startGame_Img = transform.Find("PauseGame_btn/StartGame_img").GetComponent<Image>();
+        currentScore_Txt.text = "0";
+        diamondCount_Txt.text = "0";
         gameObject.SetActive(false);
         startGame_Img.enabled = false;
     }
@@ -42,6 +45,11 @@ public class GameUIPanel : MonoBehaviour
     private void UpdatePlayerUIScore(int curScore)
     {
         currentScore_Txt.text = curScore.ToString();
+    }
+
+    private void UpdateDiamondUICount(int curCount)
+    {
+        diamondCount_Txt.text = curCount.ToString();
     }
 
     /// <summary>
@@ -61,5 +69,6 @@ public class GameUIPanel : MonoBehaviour
     {
         EventCenter.RemoveListener(EventType.ShowGamePanel, ShowGameUIPanel);
         EventCenter.RemoveListener<int>(EventType.UpdatePlayerUIScore, UpdatePlayerUIScore);
+        EventCenter.RemoveListener<int>(EventType.UpdatePlayerDiamondUICount, UpdateDiamondUICount);
     }
 }
