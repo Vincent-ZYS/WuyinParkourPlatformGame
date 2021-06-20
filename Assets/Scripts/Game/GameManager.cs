@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private static GameManager _instance;
     /// <summary>
+    /// The Flag to judge is current game a restart round or not.
+    /// </summary>
+    public static bool isReStartGame { get; set; }
+    /// <summary>
     /// The Flag to judge current game is start or not.
     /// </summary>
     public bool isGameStart { get; set; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MainUIPanel : MonoBehaviour
 {
@@ -10,10 +11,24 @@ public class MainUIPanel : MonoBehaviour
     private Button rank_Btn;
     private Button sound_Btn;
 
+    private RectTransform panelFstPartRctf, panelSecPartRectf;
+
     private void Awake()
     {
-        GameManager.Instance().isGameStart = false;
+        EventCenter.AddListner<bool>(EventType.ShowMainPanel, IsShowMainUIPanelOrNot);
         Initiation();
+        if(GameManager.isReStartGame)
+        {
+            OnStartGameBtnClick();
+            GameManager.isReStartGame = false;
+            return;
+        }
+        GameManager.Instance().isGameStart = false;
+    }
+
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener<bool>(EventType.ShowMainPanel, IsShowMainUIPanelOrNot);
     }
 
     /// <summary>
@@ -29,6 +44,24 @@ public class MainUIPanel : MonoBehaviour
         rank_Btn.onClick.AddListener(OnRankBtnClick);
         sound_Btn = transform.Find("DownPart_go/OtherBtn_group/Sound_btn").GetComponent<Button>();
         sound_Btn.onClick.AddListener(OnSoundBtnClick);
+        panelFstPartRctf = transform.Find("AbovePart_go").GetComponent<RectTransform>();
+        panelSecPartRectf = transform.Find("DownPart_go").GetComponent<RectTransform>();
+    }
+
+    public void IsShowMainUIPanelOrNot(bool isShow)
+    {
+        if (isShow)
+        {
+            panelFstPartRctf.DOAnchorPos(new Vector2(0f, -245f), 0.5f);
+            panelSecPartRectf.DOAnchorPos(new Vector2(0f, 216f), 0.5f);
+            GetComponent<Image>().DOFade(1f, 0.8f);
+        }
+        else
+        {
+            panelFstPartRctf.DOAnchorPos(new Vector2(480f, -245f), 0.5f);
+            panelSecPartRectf.DOAnchorPos(new Vector2(-480f, 216f), 0.5f);
+            GetComponent<Image>().DOFade(0f, 0.8f);
+        }
     }
 
     /// <summary>
@@ -37,8 +70,8 @@ public class MainUIPanel : MonoBehaviour
     private void OnStartGameBtnClick()
     {
         EventCenter.BroadCast(EventType.ShowGamePanel,true);
+        EventCenter.BroadCast(EventType.ShowMainPanel, false);
         GameManager.Instance().isGameStart = true;
-        gameObject.SetActive(false);
     }
 
     private void OnSkinStoreBtnClick()

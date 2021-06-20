@@ -1,5 +1,6 @@
 ﻿public enum EventType
 {
+    ShowMainPanel,
     ShowGamePanel,
     ShowGameOverPanel,
     DecidePath,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameUIPanel : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameUIPanel : MonoBehaviour
     private Text diamondCount_Txt;
     private Button pause_Btn;
     private Image startGame_Img;
+
+    private RectTransform panelFstPartRctf;
 
     private void Awake()
     {
@@ -23,15 +26,15 @@ public class GameUIPanel : MonoBehaviour
     /// </summary>
     private void Initiation()
     {
-        currentScore_Txt = transform.Find("CurrentScore_txt").GetComponent<Text>();
-        diamondCount_Txt = transform.Find("DiamondIcon_img/DiamondCount_txt").GetComponent<Text>();
-        pause_Btn = transform.Find("PauseGame_btn").GetComponent<Button>();
+        currentScore_Txt = transform.Find("AbovePart_go/CurrentScore_txt").GetComponent<Text>();
+        diamondCount_Txt = transform.Find("AbovePart_go/DiamondIcon_img/DiamondCount_txt").GetComponent<Text>();
+        pause_Btn = transform.Find("AbovePart_go/PauseGame_btn").GetComponent<Button>();
         pause_Btn.onClick.AddListener(OnPauseGameBtnClick);
-        startGame_Img = transform.Find("PauseGame_btn/StartGame_img").GetComponent<Image>();
+        startGame_Img = transform.Find("AbovePart_go/PauseGame_btn/StartGame_img").GetComponent<Image>();
         currentScore_Txt.text = "0";
         diamondCount_Txt.text = "0";
-        gameObject.SetActive(false);
         startGame_Img.enabled = false;
+        panelFstPartRctf = transform.Find("AbovePart_go").GetComponent<RectTransform>();
     }
 
     /// <summary>
@@ -39,7 +42,14 @@ public class GameUIPanel : MonoBehaviour
     /// </summary>
     private void ShowGameUIPanel(bool isShow)
     {
-        gameObject.SetActive(true);
+        if (isShow)
+        {
+            panelFstPartRctf.DOAnchorPos(new Vector2(0f, -50f), 0.5f);
+        }
+        else
+        {
+            panelFstPartRctf.DOAnchorPos(new Vector2(480f, -50f), 0.5f);
+        }
     }
 
     private void UpdatePlayerUIScore(int curScore)

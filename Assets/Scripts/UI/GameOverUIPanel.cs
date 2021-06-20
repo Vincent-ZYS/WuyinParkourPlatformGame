@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class GameOverUIPanel : MonoBehaviour
@@ -58,7 +59,7 @@ public class GameOverUIPanel : MonoBehaviour
         {
             panelFstPartRctf.DOAnchorPos(new Vector2(0f, 210f), 0.5f);
             panelSecPartRectf.DOAnchorPos(new Vector2(0f, -200f), 0.5f);
-            GetComponent<Image>().DOFade(1f, 0.8f);
+            GetComponent<Image>().DOFade(0f, 0.8f);
         }
     }
 
@@ -69,11 +70,24 @@ public class GameOverUIPanel : MonoBehaviour
 
     public void OnHomeBtnClick()
     {
-
+        ResetGameStatusData(false, false);
     }
 
     public void OnRestartBtnClick()
     {
+        //TODO Some bugs happened with DOTween
+        //DOTween.Clear(true);
+        GameManager.isReStartGame = true;
+        ResetGameStatusData(false, true);
+        //EventCenter.BroadCast(EventType.ShowGamePanel, true);
+        //EventCenter.BroadCast(EventType.ShowMainPanel, false);
+    }
 
+    private void ResetGameStatusData(bool isGameOver, bool isGameStart)
+    {
+        GameManager.Instance().isGameOver = isGameOver;
+        GameManager.Instance().isGameStart = isGameStart;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
